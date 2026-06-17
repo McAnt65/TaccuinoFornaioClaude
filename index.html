@@ -269,51 +269,68 @@
             border-color: #5a2c11;
         }
         
-        /* Barra di ricerca ricette */
+        /* ============================================================
+           RICERCA E BADGE CATEGORIE
+           ============================================================ */
         .ricerca-wrap {
-            margin: 0.6rem 0 0.4rem 0;
             position: relative;
+            margin: 0.6rem 0 0.3rem 0;
         }
         .ricerca-input {
             width: 100%;
             box-sizing: border-box;
-            padding: 0.55rem 2.2rem 0.55rem 0.85rem;
+            padding: 0.55rem 2.4rem 0.55rem 0.85rem;
             font-family: 'Cormorant Garamond', serif;
             font-size: 1rem;
-            font-style: italic;
             color: #3a1f08;
-            background: rgba(245, 228, 190, 0.55);
+            background: rgba(245, 233, 195, 0.55);
             border: 1px solid rgba(139, 90, 43, 0.45);
             border-radius: 3px;
             outline: none;
-            transition: border-color 0.2s, background 0.2s;
+            transition: border-color 0.25s, background 0.25s;
         }
         .ricerca-input:focus {
             border-color: rgba(139, 90, 43, 0.85);
-            background: rgba(245, 228, 190, 0.8);
+            background: rgba(245, 233, 195, 0.8);
         }
-        .ricerca-input::placeholder { color: rgba(90, 55, 20, 0.5); }
-        .ricerca-clear {
+        .ricerca-input::placeholder { color: rgba(90, 55, 25, 0.5); }
+        .ricerca-icona {
             position: absolute;
-            right: 0.55rem;
+            right: 0.7rem;
             top: 50%;
             transform: translateY(-50%);
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 1rem;
-            color: rgba(90, 55, 20, 0.5);
-            padding: 0;
-            line-height: 1;
-            display: none;
+            color: rgba(90, 55, 25, 0.45);
+            font-size: 1.1rem;
+            pointer-events: none;
         }
-        .ricerca-clear.visibile { display: block; }
+        .risultati-ricerca { margin-top: 0.4rem; }
+        .ricerca-sommario {
+            font-size: 0.82rem;
+            font-style: italic;
+            color: #7a5c3a;
+            margin: 0.2rem 0 0.4rem 0.1rem;
+        }
         .ricerca-nessun-risultato {
             font-style: italic;
             color: #7a5c3a;
-            padding: 0.8rem 0;
-            text-align: center;
+            padding: 0.4rem 0.1rem;
         }
+
+        /* Badge contatore ricette per categoria */
+        .cat-con-badge {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .cat-badge {
+            font-family: 'Cinzel', serif;
+            font-size: 0.72rem;
+            color: rgba(139, 90, 43, 0.7);
+            letter-spacing: 1px;
+            flex-shrink: 0;
+            margin-left: 0.6rem;
+        }
+        .cat-badge.zero { color: rgba(139, 90, 43, 0.3); }
 
         /* Preferiti — pagina pagnottelle */
         .preferiti-vuoti {
@@ -340,6 +357,15 @@
             transition: transform 0.2s ease;
         }
         .stella-elenco:hover { transform: scale(1.25); }
+
+        .nota-uova {
+            font-style: italic;
+            color: #7a5c3a;
+            font-size: 0.92rem;
+            margin-top: 0.3rem;
+            list-style: none;
+            padding-left: 0;
+        }
 
         .ancora-storia { 
             display: block; 
@@ -518,7 +544,6 @@ function chiudiFotoSovrapposizione() {
     <script src="ricette_dolci.js"></script>
     <script src="ricette_impasti.js"></script>
     <script src="ricette_colazioni.js"></script>
-    <script src="ricette_integrali.js"></script>
     <script>
 let pesoAttuale = 750;
 let lievitoAttuale = 'secco';
@@ -530,7 +555,7 @@ let lievitoAttuale = 'secco';
 // per chi aggiunge nuove ricette in ricette.js.
 // ---------------------------------------------------------------
 function validaDatabaseRicette() {
-    const categorieValide = ['comuni', 'europei', 'mondo', 'sfiziosi', 'dolci', 'impasti', 'colazioni', 'integrali'];
+    const categorieValide = ['comuni', 'integrali', 'europei', 'mondo', 'sfiziosi', 'dolci', 'impasti', 'colazioni'];
     const numeriProgramma = Array.from({length: 19}, (_, i) => `${i + 1}.`);
 
     const idVisti = new Set();
@@ -818,128 +843,110 @@ function toggleStellaPreferita(id, event) {
         }
     }
 
+    // Mappa slug → etichetta per le categorie del ricettario
+    const _CATEGORIE = [
+        { slug: 'comuni',    label: 'Pani Comuni' },
+        { slug: 'integrali', label: 'Pani Integrali' },
+        { slug: 'europei',   label: 'Pani Europei' },
+        { slug: 'mondo',     label: 'Pani dal Mondo' },
+        { slug: 'sfiziosi',  label: 'Pani Sfiziosi' },
+        { slug: 'dolci',     label: 'Pani Dolci' },
+        { slug: 'impasti',   label: 'Impasti' },
+        { slug: 'colazioni', label: 'Colazioni, Porridge e Marmellate' },
+    ];
+
     function mostraCategorieRicettario() {
         const box = document.getElementById('scroll-box');
-        box.innerHTML = `
-            <h2>Il Ricettario</h2>
-            <div class="ricerca-wrap">
-                <input  class="ricerca-input"
-                        id="ricerca-input"
-                        type="text"
-                        placeholder="Cerca per titolo o ingrediente…"
-                        oninput="aggiornaRicerca(this.value)"
-                        autocomplete="off"
-                        autocorrect="off"
-                        spellcheck="false">
-                <button class="ricerca-clear"
-                        id="ricerca-clear"
-                        onclick="svuotaRicerca()"
-                        title="Cancella">✕</button>
-            </div>
-            <div id="ricerca-risultati"></div>
-            <div id="lista-categorie">
-                <div class="cat-item" onclick="mostraListaCategoria('comuni')">Pani Comuni</div>
-                <div class="cat-item" onclick="mostraListaCategoria('europei')">Pani Europei</div>
-                <div class="cat-item" onclick="mostraListaCategoria('mondo')">Pani dal Mondo</div>
-                <div class="cat-item" onclick="mostraListaCategoria('sfiziosi')">Pani Sfiziosi</div>
-                <div class="cat-item" onclick="mostraListaCategoria('dolci')">Pani Dolci</div>
-                <div class="cat-item" onclick="mostraListaCategoria('integrali')">Pani Integrali</div>
-                <div class="cat-item" onclick="mostraListaCategoria('impasti')">Impasti</div>
-                <div class="cat-item" onclick="mostraListaCategoria('colazioni')">Colazioni, Porridge e Marmellate</div>
-            </div>
-        `;
-    }
 
-    // Normalizza stringa per confronto case-insensitive e senza accenti
-    function _normalizza(str) {
-        return (str || '')
-            .toLowerCase()
-            .normalize('NFD')
-            .replace(/[\u0300-\u036f]/g, '');
-    }
-
-    // Ricerca su titolo + ingredienti (dosiBase, ingredientiFissi, ingredientiExtra) + note + storia
-    function _cercaInRicetta(r, query) {
-        const q = _normalizza(query);
-        if (!q) return false;
-
-        // Titolo
-        if (_normalizza(r.titolo).includes(q)) return true;
-
-        // Note
-        if (_normalizza(r.note).includes(q)) return true;
-
-        // Tipo farina
-        if (_normalizza(r.tipoFarina).includes(q)) return true;
-
-        // Ingredienti dose base (nomi campi: acqua, farina, sale, zucchero, lievito)
-        if (r.dosiBase) {
-            const nomi = Object.keys(r.dosiBase);
-            if (nomi.some(n => _normalizza(n).includes(q))) return true;
-        }
-
-        // Ingredienti fissi (tipoDose fissa)
-        if (r.ingredientiFissi) {
-            if (r.ingredientiFissi.some(i => _normalizza(i.nome).includes(q))) return true;
-        }
-
-        // Ingredienti extra (olive, noci, ecc.)
-        if (r.ingredientiExtra) {
-            if (r.ingredientiExtra.some(i => _normalizza(i.nome).includes(q))) return true;
-        }
-
-        // Storia (cerca nel testo senza tag HTML)
-        const storiaPlain = (r.storia || '').replace(/<[^>]+>/g, ' ');
-        if (_normalizza(storiaPlain).includes(q)) return true;
-
-        return false;
-    }
-
-    function aggiornaRicerca(query) {
-        const clearBtn      = document.getElementById('ricerca-clear');
-        const risultatiDiv  = document.getElementById('ricerca-risultati');
-        const categorieDiv  = document.getElementById('lista-categorie');
-        if (!risultatiDiv || !categorieDiv) return;
-
-        // Mostra/nasconde il pulsante ✕
-        if (clearBtn) clearBtn.classList.toggle('visibile', query.length > 0);
-
-        if (!query.trim()) {
-            risultatiDiv.innerHTML = '';
-            categorieDiv.style.display = '';
-            return;
-        }
-
-        // Nasconde le categorie mentre si cerca
-        categorieDiv.style.display = 'none';
-
-        const trovate = databaseRicette.filter(r => _cercaInRicetta(r, query));
-
-        if (trovate.length === 0) {
-            risultatiDiv.innerHTML = '<p class="ricerca-nessun-risultato">Nessuna ricetta trovata.</p>';
-            return;
-        }
-
-        let html = `<p class="ricerca-nessun-risultato" style="opacity:0.7; font-size:0.85rem;">
-                        ${trovate.length} ricett${trovate.length === 1 ? 'a' : 'e'} trovat${trovate.length === 1 ? 'a' : 'e'}
-                    </p>`;
-        trovate.forEach(r => {
-            let linkFoto = '';
-            if (r.immagine) {
-                linkFoto = ` <span class="vedi-foto-btn" onclick="event.stopPropagation(); apriFotoSovrapposizione('${r.immagine}')">[ VEDI FOTO ]</span>`;
-            }
-            html += `<div class="cat-item" onclick="mostraDettaglioRicetta('${r.id}')">N.&nbsp;${r.numero} — ${r.titolo}${linkFoto}</div>`;
+        // Conteggio ricette per categoria
+        const conteggi = {};
+        _CATEGORIE.forEach(c => { conteggi[c.slug] = 0; });
+        databaseRicette.forEach(r => {
+            if (conteggi[r.categoria] !== undefined) conteggi[r.categoria]++;
         });
-        risultatiDiv.innerHTML = html;
+
+        let html = '<h2>Il Ricettario</h2>';
+
+        // Box di ricerca
+        html += `
+            <div class="ricerca-wrap">
+                <input type="text" id="input-ricerca" class="ricerca-input"
+                    placeholder="Cerca per titolo o ingrediente…"
+                    oninput="eseguiRicerca(this.value)"
+                    autocomplete="off" autocorrect="off" spellcheck="false">
+                <span class="ricerca-icona">&#x2315;</span>
+            </div>
+            <div id="risultati-ricerca" class="risultati-ricerca" style="display:none;"></div>`;
+
+        // Lista categorie con contatore
+        _CATEGORIE.forEach(c => {
+            const n = conteggi[c.slug];
+            const badge = n > 0
+                ? `<span class="cat-badge">${n}</span>`
+                : `<span class="cat-badge zero">—</span>`;
+            html += `<div class="cat-item cat-con-badge" onclick="mostraListaCategoria('${c.slug}')">
+                ${c.label}${badge}
+            </div>`;
+        });
+
+        box.innerHTML = html;
+        box.scrollTop = 0;
+
+        // Focus automatico sulla ricerca (non su mobile per evitare tastiera inattesa)
+        // document.getElementById('input-ricerca').focus();
     }
 
-    function svuotaRicerca() {
-        const input = document.getElementById('ricerca-input');
-        if (input) {
-            input.value = '';
-            if (input.focus) input.focus();
-            aggiornaRicerca('');
+    function eseguiRicerca(query) {
+        const q = query.trim().toLowerCase();
+        const boxRisultati = document.getElementById('risultati-ricerca');
+        if (!boxRisultati) return;
+
+        if (q.length < 2) {
+            boxRisultati.style.display = 'none';
+            boxRisultati.innerHTML = '';
+            return;
         }
+
+        // Cerca in: titolo, categoria, tipoFarina, note,
+        // nomi degli ingredienti (dosiBase keys), ingredientiExtra, storia
+        const risultati = databaseRicette.filter(r => {
+            // Titolo
+            if (r.titolo && r.titolo.toLowerCase().includes(q)) return true;
+            // Tipo farina
+            if (r.tipoFarina && r.tipoFarina.toLowerCase().includes(q)) return true;
+            // Note
+            if (r.note && r.note.toLowerCase().includes(q)) return true;
+            // Storia (testo narrativo)
+            if (r.storia && r.storia.toLowerCase().includes(q)) return true;
+            // ingredientiExtra (nomi)
+            if (r.ingredientiExtra) {
+                if (r.ingredientiExtra.some(e => e.nome && e.nome.toLowerCase().includes(q))) return true;
+            }
+            // ingredientiFissi
+            if (r.ingredientiFissi) {
+                if (r.ingredientiFissi.some(e => e.nome && e.nome.toLowerCase().includes(q))) return true;
+            }
+            // Chiavi dosiBase (acqua, farina, olio, ecc.)
+            if (r.dosiBase) {
+                if (Object.keys(r.dosiBase).some(k => k.toLowerCase().includes(q))) return true;
+            }
+            return false;
+        });
+
+        if (risultati.length === 0) {
+            boxRisultati.innerHTML = `<p class="ricerca-nessun-risultato">Nessuna ricetta trovata per "<em>${query}</em>".</p>`;
+        } else {
+            let html = `<p class="ricerca-sommario">${risultati.length} ricett${risultati.length === 1 ? 'a' : 'e'} trovat${risultati.length === 1 ? 'a' : 'e'}:</p>`;
+            risultati.forEach(r => {
+                let linkFoto = '';
+                if (r.immagine) {
+                    linkFoto = ` <span class="vedi-foto-btn" onclick="event.stopPropagation(); apriFotoSovrapposizione('${r.immagine}')">[ VEDI FOTO ]</span>`;
+                }
+                html += `<div class="cat-item" onclick="mostraDettaglioRicetta('${r.id}')">N.&nbsp;${r.numero} — ${r.titolo}${linkFoto}</div>`;
+            });
+            boxRisultati.innerHTML = html;
+        }
+        boxRisultati.style.display = 'block';
     }
 
     function mostraListaCategoria(catSlug) {
@@ -1100,14 +1107,31 @@ function toggleStellaPreferita(id, event) {
             const latteFin = ricetta.dosiBase.latte ? (ricetta.dosiBase.latte * coeffPeso).toFixed(0) : 0;
             const burroFin = ricetta.dosiBase.burro ? (ricetta.dosiBase.burro * coeffPeso).toFixed(0) : 0;
         
-            let uovaFin = ricetta.dosiBase.uova ? Math.round(ricetta.dosiBase.uova * coeffPeso) : 0;
-        
+            // Le uova non si scalano linearmente: 1 uovo è la dose base (750g).
+            // A 500g si omette (troppo piccola la pagnotta) o si usa solo il tuorlo.
+            // A 1000g si usano 2 uova. Il campo dosiBase.uova indica la dose per 750g.
+            let uovaFin = 0;
+            let notaUova = '';
+            if (ricetta.dosiBase.uova) {
+                const uovaBase = ricetta.dosiBase.uova;
+                if (pesoAttuale === 750) {
+                    uovaFin = uovaBase;
+                } else if (pesoAttuale === 500) {
+                    uovaFin = 0;
+                    notaUova = `<li class="nota-uova">⚠️ A 500 g ometti l'uovo (o usa solo il tuorlo) — le uova non si dimezzano.</li>`;
+                } else if (pesoAttuale === 1000) {
+                    uovaFin = uovaBase * 2;
+                    notaUova = `<li class="nota-uova">💡 A 1000 g usa ${uovaFin} uova.</li>`;
+                }
+            }
+
             let testoLiquidi = `${latteFin} ml di Latte`;
             if (uovaFin > 0) {
-                testoLiquidi += ` unito a ${uovaFin} Uovo/uova (da sbattere leggermente)`;
+                testoLiquidi += ` unito a ${uovaFin} uov${uovaFin === 1 ? 'o' : 'a'} (da sbattere leggermente)`;
             }
 
             if (latteFin > 0) htmlIngredienti += `<li><strong>I Liquidi:</strong> ${testoLiquidi}</li>`;
+            if (notaUova) htmlIngredienti += notaUova;
             if (farinaFin > 0) htmlIngredienti += `<li><strong>Il Mantello:</strong> ${farinaFin} g di ${ricetta.tipoFarina}.</li>`;
             if (parseFloat(saleFin) > 0) htmlIngredienti += `<li><strong>Angolo Opposto 1:</strong> ${saleFin} cucchiaino di Sale.</li>`;
             if (parseFloat(zuccheroFin) > 0) htmlIngredienti += `<li><strong>Angolo Opposto 2:</strong> ${zuccheroFin} cucchiai grandi di Zucchero.</li>`;
