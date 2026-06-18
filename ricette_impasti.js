@@ -20,7 +20,7 @@ databaseRicette.push(
 {
 numero: 3,
         id: "sfoglia_emiliana",
-        immagine: "foto_sfoglia.jpg",
+        immagine: "sfoglia_uovo_emiliana.jpg",
         titolo: "Sfoglia all'Uovo Emiliana",
         categoria: "impasti", 
         programma: "11. IMPASTO", // <--- Corretto secondo i 19 Segreti!

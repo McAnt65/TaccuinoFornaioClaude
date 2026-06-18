@@ -1,14 +1,23 @@
 {
-  "short_name": "Fornaio",
-  "name": "Il Taccuino del Fornaio",
+  "short_name": "Il Forno",
+  "name": "Il Forno di Mauro e Francesca",
+  "description": "Il taccuino del fornaio — ricette per macchina del pane Girmi",
   "icons": [
+    {
+      "src": "icona_192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
     {
       "src": "icona.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "purpose": "any maskable"
     }
   ],
   "start_url": "./index.html",
+  "scope": "./",
   "background_color": "#2c1d11",
   "theme_color": "#2c1d11",
   "display": "standalone",

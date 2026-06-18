@@ -46,7 +46,7 @@ numero: 6,
 {
 numero: 8,
         id: "plumcake_yogurt",
-        immagine: "foto_plumcake.jpg",
+        immagine: "plumcake_yogurt.jpg",
         titolo: "Plumcake Soffice allo Yogurt",
         categoria: "colazioni", 
         programma: "18. TORTA", // <--- Corretto secondo i 19 Segreti!

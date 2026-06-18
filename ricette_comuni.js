@@ -76,5 +76,24 @@ numero: 21,
         dosiBase: { acqua: 320, farine: { "Tipo 0": 300, "Semola Rimacinata": 200 }, sale: 1.5, zucchero: 1, lievito: 7 },
         isBrioche: false,
         note: "✨ <strong>Il Consiglio del Fornaio:</strong> La semola rimacinata assorbe l'acqua più lentamente rispetto alla farina bianca. Durante i primi minuti di impasto potresti vedere la massa più compatta, ma non aggiungere liquidi: il programma BASE darà alla macchina tutto il tempo necessario per creare una maglia glutinica spettacolare."
+    },
+{
+        numero: 22,
+        id: "pane_rapido_sesamo",
+        immagine: "foto_pane_sesamo.jpg", 
+        titolo: "Pane Bianco Rapido al Sesamo",
+        categoria: "comuni",
+        programma: "4. RAPIDO",
+        doratura: "SCURO",
+        storia: "<p>Nelle sere in cui la nebbia di Londra si fa così fitta da ghermire i lampioni a gas e il gelo morde i calcagni dei passanti frettolosi, non v'è conforto più grande del focolare domestico. Eppure, persino lo spirito più paziente vacilla dinanzi all'attesa di una lunga lievitazione, quando lo stomaco reclama il suo antico diritto a una cena calda e corroborante. È in questi momenti che il miracolo del programma Rapido giunge in soccorso, come un vecchio amico che bussa alla porta inaspettato, recando sotto il mantello un dono inestimabile.</p><p>Questo pane non chiede ore di attesa, ma si compie nel volgere di un soffio, mentre l'acqua si scalda e la tavola viene apparecchiata. Il calore sprigionato dalla Girmi si fa intenso, sollecito, quasi a voler imitare la fretta allegra di un mastro fornaio che getta legna secca nella bocca del forno. E quando la cupola comincia a gonfiarsi, ecco che il profumo del sesamo tostato si diffonde nella stanza, un aroma ricco, oleoso e antico che sa di mercati orientali e di ricchezza d'altri tempi. Una crosta fiera e brunita, tempestata di piccoli semi dorati che scricchiolano sotto i denti, racchiude una mollica fragrante e compatta, nata per essere spezzata ancora fumante e cosparsa di burro salato, capace di scacciare ogni ombra e di trasformare anche la più umile delle stanze nel regno della più sincera contentezza.</p>",
+        // Un goccio d'acqua in più per aiutare la lievitazione sprint (64% idratazione) ed extra lievito
+        dosiBase: { acqua: 320, farina: 500, sale: 1.5, zucchero: 1, lievito: 9 }, 
+        tipoFarina: "Farina Tipo 0",
+        isBrioche: false,
+        ingredientiExtra: [
+        { nome: "Semi di Sesamo (da inserire nell'impasto)", qtaBase: 20, unita: "g", momento: "Iniziale insieme alla farina" },
+        { nome: "Semi di Sesamo (da spolverare sopra)", qtaBase: 10, unita: "g", momento: "Al secondo BIP o spennellati prima della cottura" }
+    ],
+        note: "✨ <strong>Il Consiglio del Fornaio:</strong> Il programma RAPIDO richiede un calore immediato per far attivare i 9 grammi di lievito in poco tempo. Per un risultato perfetto, usa acqua tiepida (circa 30-35°C), mai fredda di rubinetto! Se vuoi che i semi in superficie rimangano attaccati come un gioiello, spennella delicatamente la cupola con un goccio d'acqua o latte appena prima che inizi la fase di cottura autonoma."
     }
 );
