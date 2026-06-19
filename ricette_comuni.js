@@ -83,11 +83,11 @@ numero: 21,
         immagine: "foto_pane_sesamo.jpg", 
         titolo: "Pane Bianco Rapido al Sesamo",
         categoria: "comuni",
-        programma: "4. RAPIDO",
+        programma: "4. VELOCE",
         doratura: "SCURO",
         storia: "<p>Nelle sere in cui la nebbia di Londra si fa così fitta da ghermire i lampioni a gas e il gelo morde i calcagni dei passanti frettolosi, non v'è conforto più grande del focolare domestico. Eppure, persino lo spirito più paziente vacilla dinanzi all'attesa di una lunga lievitazione, quando lo stomaco reclama il suo antico diritto a una cena calda e corroborante. È in questi momenti che il miracolo del programma Rapido giunge in soccorso, come un vecchio amico che bussa alla porta inaspettato, recando sotto il mantello un dono inestimabile.</p><p>Questo pane non chiede ore di attesa, ma si compie nel volgere di un soffio, mentre l'acqua si scalda e la tavola viene apparecchiata. Il calore sprigionato dalla Girmi si fa intenso, sollecito, quasi a voler imitare la fretta allegra di un mastro fornaio che getta legna secca nella bocca del forno. E quando la cupola comincia a gonfiarsi, ecco che il profumo del sesamo tostato si diffonde nella stanza, un aroma ricco, oleoso e antico che sa di mercati orientali e di ricchezza d'altri tempi. Una crosta fiera e brunita, tempestata di piccoli semi dorati che scricchiolano sotto i denti, racchiude una mollica fragrante e compatta, nata per essere spezzata ancora fumante e cosparsa di burro salato, capace di scacciare ogni ombra e di trasformare anche la più umile delle stanze nel regno della più sincera contentezza.</p>",
         // Un goccio d'acqua in più per aiutare la lievitazione sprint (64% idratazione) ed extra lievito
-        dosiBase: { acqua: 320, farina: 500, sale: 1.5, zucchero: 1, lievito: 9 }, 
+        dosiBase: { acqua: 310, farina: 500, sale: 1.5, zucchero: 1, lievito: 9 }, 
         tipoFarina: "Farina Tipo 0",
         isBrioche: false,
         ingredientiExtra: [

@@ -46,7 +46,7 @@ numero: 6,
 {
 numero: 8,
         id: "plumcake_yogurt",
-        immagine: "plumcake_yogurt.jpg",
+        immagine: "foto_plumcake.jpg",
         titolo: "Plumcake Soffice allo Yogurt",
         categoria: "colazioni", 
         programma: "18. TORTA", // <--- Corretto secondo i 19 Segreti!
@@ -109,22 +109,27 @@ numero: 10,
         note: "<strong>Sequenza Alchemica e Disposizione delle Mele:</strong> Sbucciate le mele: tagliatene una a cubetti piccolissimi e l'altra a fettine sottili. Versate sul fondo del cestello i liquidi (uova sbattute, burro fuso, latte), poi coprite con lo zucchero, la farina, la cannella e i cubetti piccoli di mela. Create una conca nella farina e deponetevi il lievito.<br><br>⏱️ <strong>Il Segreto dell'Alchimista:</strong> Avviate il programma 18. Durante i primi 10-15 minuti di impasto, aiutatevi con una spatola di silicone per raccogliere la farina dagli angoli. Appena la macchina smette di mescolare e inizia la fase di lievitazione/cottura (sentirete le pale fermarsi definitivamente), aprite l'oblò e disponete rapidamente le fettine di mela rimaste sulla superficie, spolverizzandole con un pizzico di zucchero prima che il calore le sigilli."
     },
 {
-numero: 20,
-        id: "yogurt_bianco_cremoso",
-        immagine: "foto_yogurt_casa.jpg", 
-        titolo: "Yogurt Bianco Cremoso Fatto in Casa",
-        categoria: "colazioni", // O una categoria dedicata se preferisci
-        programma: "15. Yogurt", // Il ciclo a temperatura controllata per antonomasia
-        doratura: "MEDIO",
-        storia: "<p>La magia della fermentazione è antica quanto la civiltà stessa. Nelle culle della civiltà rurale, il latte veniva custodito al caldo affinché il tempo e microscopici alleati invisibili operassero una trasformazione miracolosa, convertendo il liquido in una crema densa, rinfrescante e nutriente.</p><p>Preparare lo yogurt in casa con la Girmi significa riscoprire questo ritmo lento e genuino. Senza conservanti, addensanti o zuccheri aggiunti, otterrai un prodotto purissimo, vellutato e dal sapore delicatamente acidulo. È la tela bianca perfetta per accogliere il tuo tocco alchemico: una pioggia di frutta fresca, un filo di miele dorato o una manciata di cereali croccanti per iniziare la giornata con l'energia della natura.</p>",
-        // Calibrato per il calcolo matematico: 1 litro di latte base (1000 ml) e 1 vasetto di yogurt (125g) come starter
-        dosiBase: { acqua: 1000, sale: 0, zucchero: 0, lievito: 125 }, 
-        // 🌟 Trucco Magico del Codice: Rinominiamo i componenti per azzerare l'effetto "Pane"
-        etichettaLiquido: "Latte Intero (UHT a temperatura ambiente o fresco precedentemente bollito)",
-        tipoFarina: "Nessuna Farina (Lasciare il cestello pulito, inserire solo i liquidi!)",
-        etichettaLievito: "Yogurt Bianco Naturale con Fermenti Vivi (lo 'Starter')",
-        unitaLievito: "g", // Cambia 'bustine/cucchiaini' in grammi per lo starter
-        isBrioche: false,
-        note: "✨ <strong>L'Alchimia dei Fermenti:</strong> Per questa ricetta NON si usa la pala impastatrice! Rimuovila dal perno. Versa lo yogurt starter nel cestello insieme a un goccio di latte e mescola delicatamente con un cucchiaio di plastica o legno fino a scioglierlo, poi unisci il resto del latte. Avvia il programma 15. Al termine (dopo circa 6-8 ore), trasferisci lo yogurt in vasetti di vetro e lascialo rassodare in frigorifero per almeno 4 ore prima di gustarlo."
-    }
+    numero: 20,
+    id: "yogurt_bianco_cremoso",
+    immagine: "foto_yogurt_casa.jpg", 
+    titolo: "Yogurt Bianco Cremoso Fatto in Casa",
+    categoria: "colazioni", 
+    programma: "15. Yogurt", 
+    doratura: "-", // Rimosso MEDIO poiché lo yogurt non viene dorato o cotto
+    storia: "<p>La magia della fermentazione è antica quanto la civiltà stessa. Nelle culle della civiltà rurale, il latte veniva custodito al caldo affinché il tempo e microscopici alleati invisibili operassero una trasformazione miracolosa, convertendo il liquido in una crema densa, rinfrescante e nutriente.</p><p>Preparare lo yogurt in casa con la Girmi significa riscoprire questo ritmo lento e genuino. Senza conservanti, addensanti o zuccheri aggiunti, otterrai un prodotto purissimo, vellutato e dal sapore delicatamente acidulo. È la tela bianca perfetta per accogliere il tuo tocco alchemico: una pioggia di frutta fresca, un filo di miele dorato o una manciata di cereali croccanti per iniziare la giornata con l'energia della natura.</p>",
+    
+    // 🌟 Attiva la logica per nascondere i pulsanti del peso e del lievito in index.html
+    tipoDose: "fissa", 
+    testoDose: "Proporzioni fisse per una base di mezzo chilo", 
+    
+    // Dosi impostate direttamente a "mezzo chilo fissa" (500 ml di latte e 60 g di starter)
+    ingredientiFissi: [
+        { nome: "Latte Intero (UHT a temperatura ambiente o fresco precedentemente bollito)", quantita: "500 ml" },
+        { nome: "Yogurt Bianco Naturale con Fermenti Vivi (lo 'Starter')", quantita: "60 g" }
+    ],
+    isBrioche: false,
+    
+    // Note ripulite dalle icone colorate (lasciando solo i tag strong per evidenziare i titoli)
+    note: "<strong>Resa:</strong> da questa dose otterrai circa 500 g di yogurt — abbastanza per riempire 2-3 vasetti.<br><br><strong>L'Alchimia dei Fermenti:</strong> Per questa ricetta NON si usa la pala impastatrice! Rimuovila dal perno. Versa lo yogurt starter nel cestello insieme a un goccio di latte e mescola delicatamente con un cucchiaio di plastica o legno fino a scioglierlo, poi unisci il resto del latte. Avvia il programma 15. Al termine (dopo circa 6-8 ore), trasferisci lo yogurt in vasetti di vetro e lascialo rassodare in frigorifero per almeno 4 ore prima di gustarlo."
+}
 );
