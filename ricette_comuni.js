@@ -77,17 +77,17 @@ numero: 21,
         isBrioche: false,
         note: "✨ <strong>Il Consiglio del Fornaio:</strong> La semola rimacinata assorbe l'acqua più lentamente rispetto alla farina bianca. Durante i primi minuti di impasto potresti vedere la massa più compatta, ma non aggiungere liquidi: il programma BASE darà alla macchina tutto il tempo necessario per creare una maglia glutinica spettacolare."
     },
-{
+    {
         numero: 22,
         id: "pane_rapido_sesamo",
         immagine: "foto_pane_sesamo.jpg", 
         titolo: "Pane Bianco Rapido al Sesamo",
         categoria: "comuni",
-        programma: "4. VELOCE",
+        programma: "4. RAPIDO",
         doratura: "SCURO",
         storia: "<p>Nelle sere in cui la nebbia di Londra si fa così fitta da ghermire i lampioni a gas e il gelo morde i calcagni dei passanti frettolosi, non v'è conforto più grande del focolare domestico. Eppure, persino lo spirito più paziente vacilla dinanzi all'attesa di una lunga lievitazione, quando lo stomaco reclama il suo antico diritto a una cena calda e corroborante. È in questi momenti che il miracolo del programma Rapido giunge in soccorso, come un vecchio amico che bussa alla porta inaspettato, recando sotto il mantello un dono inestimabile.</p><p>Questo pane non chiede ore di attesa, ma si compie nel volgere di un soffio, mentre l'acqua si scalda e la tavola viene apparecchiata. Il calore sprigionato dalla Girmi si fa intenso, sollecito, quasi a voler imitare la fretta allegra di un mastro fornaio che getta legna secca nella bocca del forno. E quando la cupola comincia a gonfiarsi, ecco che il profumo del sesamo tostato si diffonde nella stanza, un aroma ricco, oleoso e antico che sa di mercati orientali e di ricchezza d'altri tempi. Una crosta fiera e brunita, tempestata di piccoli semi dorati che scricchiolano sotto i denti, racchiude una mollica fragrante e compatta, nata per essere spezzata ancora fumante e cosparsa di burro salato, capace di scacciare ogni ombra e di trasformare anche la più umile delle stanze nel regno della più sincera contentezza.</p>",
         // Un goccio d'acqua in più per aiutare la lievitazione sprint (64% idratazione) ed extra lievito
-        dosiBase: { acqua: 310, farina: 500, sale: 1.5, zucchero: 1, lievito: 9 }, 
+        dosiBase: { acqua: 320, farina: 500, sale: 1.5, zucchero: 1, lievito: 9 }, 
         tipoFarina: "Farina Tipo 0",
         isBrioche: false,
         ingredientiExtra: [
@@ -95,5 +95,27 @@ numero: 21,
         { nome: "Semi di Sesamo (da spolverare sopra)", qtaBase: 10, unita: "g", momento: "Al secondo BIP o spennellati prima della cottura" }
     ],
         note: "✨ <strong>Il Consiglio del Fornaio:</strong> Il programma RAPIDO richiede un calore immediato per far attivare i 9 grammi di lievito in poco tempo. Per un risultato perfetto, usa acqua tiepida (circa 30-35°C), mai fredda di rubinetto! Se vuoi che i semi in superficie rimangano attaccati come un gioiello, spennella delicatamente la cupola con un goccio d'acqua o latte appena prima che inizi la fase di cottura autonoma."
-    }
+    },
+{
+    numero: 25,
+    id: "pane_al_latte_sofficissimo",
+    immagine: "foto_pane_latte.jpg", 
+    titolo: "Pane al Latte Sofficissimo",
+    categoria: "comuni", 
+    programma: "4. DOLCE", 
+    doratura: "CHIARO", 
+    storia: "<p>Nelle domeniche mattina d'altri tempi, l'odore che svegliava la casa non era solo quello del caffè, ma il profumo dolce e avvolgente del pane al latte appena sfornato. Questa ricetta è una carezza per il palato: una mollica filante come nuvola, che si scioglie in bocca rilasciando la nota rassicurante del latte buono e la ricchezza del burro fuso.</p><p>Grazie alla Girmi e al suo programma Dolce, gli zuccheri del latte e del malto vengono coccolati con una lievitazione lenta e una cottura delicata, impedendo che la superficie si scurisca troppo e mantenendo l'interno incredibilmente idratato e soffice per giorni. È il pane delle feste, delle merende d'infanzia, perfetto da farcire con confetture fatte in casa o da gustare da solo, fetta dopo fetta, per riscoprire il sapore della genuinità.</p>",
+    dosiBase: { 
+        latte: 200,
+        acquaExtra: 130,
+        burro: 40,
+        farina: 500,     
+        sale: 2, 
+        zucchero: 30,    
+        lievito: 7 
+    }, 
+    tipoFarina: "Farina Tipo 0", 
+    isBrioche: true, 
+    note: "✨ <strong>Il Consiglio del Fornaio:</strong> Per ottenere una morbidezza leggendaria, utilizzate latte intero fresco a temperatura ambiente. Mescolate l'acqua tiepida insieme al latte prima di versarli nel cestello. Il burro non deve essere gelato di frigorifero né completamente liquido: tagliatelo a piccoli cubetti e lasciatelo ammorbidire un quarto d'ora sul tavolo prima di avviarlo nella Girmi. Se volete una crosta lucida e ambrata da vera panetteria, spennellate la superficie della pagnotta con un goccio di latte mescolato a un tuorlo d'uovo appena la macchina finisce l'ultima lievitazione ed entra nella fase di cottura."
+}
 );
