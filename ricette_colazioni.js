@@ -46,7 +46,7 @@ numero: 6,
 {
 numero: 8,
         id: "plumcake_yogurt",
-        immagine: "foto_plumcake.jpg",
+        immagine: "plumcake_yogurt.jpg",
         titolo: "Plumcake Soffice allo Yogurt",
         categoria: "colazioni", 
         programma: "18. TORTA", // <--- Corretto secondo i 19 Segreti!
@@ -68,7 +68,7 @@ numero: 8,
 {
 numero: 9,
         id: "confettura_arance_miele",
-        immagine: "foto_confettura.jpg", 
+        immagine: "confettura_arance_miele.jpg", 
         titolo: "Confettura d'Arance e Miele",
         categoria: "colazioni", 
         programma: "17. MARMELLATA",
@@ -88,7 +88,7 @@ numero: 9,
 {
 numero: 10,
         id: "torta_mele_cannella",
-        immagine: "foto_torta_mele.jpg", 
+        immagine: "torta_mele_cannella.jpg", 
         titolo: "Torta di Mele e Cannella",
         categoria: "colazioni", // Perfetta per arricchire la sezione dei risvegli dolci
         programma: "18. TORTA",
