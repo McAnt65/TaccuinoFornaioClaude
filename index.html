@@ -70,7 +70,34 @@
         .svela-4 { animation: svelaElemento 1s ease-out 1.3s both; }
         .svela-5 { animation: svelaElemento 1s ease-out 1.7s both; }
 
+/* ============================================================
+   STILE LINK INTRODUZIONE HOME
+   ============================================================ */
+.nota-link-container {
+    position: absolute;
+    top: 08%; /* Posizionato elegantemente sopra il monogramma centrale */
+    left: 0;
+    width: 100%;
+    text-align: center;
+    z-index: 12;
+}
 
+.leggi-nota-btn {
+    font-family: 'Cinzel', serif;
+    font-size: 0.72rem;
+    color: #5c1d1d; /* Bordeaux scuro d'epoca */
+    letter-spacing: 2px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    opacity: 0.75;
+    padding: 4px 8px;
+}
+
+.leggi-nota-btn:hover {
+    opacity: 1;
+    letter-spacing: 3px; /* Leggera espansione dinamica al passaggio */
+}
         
         /* Area Home invisibile mappata sul marchio superiore pergamena */
         .header-marchio { 
@@ -442,7 +469,10 @@
 <body>
 
     <div id="app-container" style="background-image: url('home_forno.jpg');">
-        
+        <!-- Piccolo link per la nota introdotto sopra il monogramma -->
+<div class="nota-link-container">
+    <span class="leggi-nota-btn" onclick="caricaSezione('introduzione')">Leggi Nota</span>
+</div>
         <div id="marchio-centro-home" onclick="caricaSezione('forno')"></div>
         
         <div class="header-marchio" onclick="vaiAllaHome()"></div>
@@ -665,38 +695,47 @@ function toggleStellaPreferita(id, event) {
     }
 
     function vaiAllaHome() {
-        const box = document.getElementById('scroll-box');
-        const marchio = document.getElementById('marchio-centro-home');
+    const box = document.getElementById('scroll-box');
+    const marchio = document.getElementById('marchio-centro-home');
+    const linkNota = document.querySelector('.nota-link-container'); // <-- Aggiungi questa
 
-        if (box.style.display !== 'none') {
-            // Usciamo da una sezione: facciamo uscire il contenuto
-            box.classList.remove('sta-entrando');
-            box.classList.add('sta-uscendo');
-            setTimeout(() => {
-                box.style.display = 'none';
-                box.classList.remove('sta-uscendo');
-            }, 560);
-        }
-
-        document.getElementById('app-container').style.backgroundImage = "url('home_forno.jpg')";
-        document.querySelector('.header-marchio').style.display = 'none';
-        marchio.style.display = 'block';
-        document.querySelectorAll('.timbro-btn').forEach(b => b.classList.remove('attivo'));
-        avviaCitazioneHome();
+    if (box.style.display !== 'none') {
+        box.classList.remove('sta-entrando');
+        box.classList.add('sta-uscendo');
+        setTimeout(() => {
+            box.style.display = 'none';
+            box.classList.remove('sta-uscendo');
+        }, 560);
     }
 
-    function caricaSezione(sezione) {
-        const box = document.getElementById('scroll-box');
-        const staVisibile = box.style.display !== 'none';
+    document.getElementById('app-container').style.backgroundImage = "url('home_forno.jpg')";
+    document.querySelector('.header-marchio').style.display = 'none';
+    marchio.style.display = 'block';
+    if(linkNota) linkNota.style.display = 'block'; // <-- Aggiungi questa
+    document.querySelectorAll('.timbro-btn').forEach(b => b.classList.remove('attivo'));
+    avviaCitazioneHome();
+}
 
-        // Ferma la citazione home
-        fermaAnimazioneCitazione();
+   function caricaSezione(sezione) {
+    const box = document.getElementById('scroll-box');
+    const staVisibile = box.style.display !== 'none';
+    const linkNota = document.querySelector('.nota-link-container'); // Recupera il contenitore del link
 
-        document.getElementById('app-container').style.backgroundImage = "url('pagina_base.jpg')";
-        document.querySelector('.header-marchio').style.display = 'block';
-        document.getElementById('marchio-centro-home').style.display = 'none';
-        document.querySelectorAll('.timbro-btn').forEach(b => b.classList.remove('attivo'));
-        document.getElementById(`t-${sezione}`).classList.add('attivo');
+    // Ferma la citazione home
+    fermaAnimazioneCitazione();
+
+    document.getElementById('app-container').style.backgroundImage = "url('pagina_base.jpg')";
+    document.querySelector('.header-marchio').style.display = 'block';
+    document.getElementById('marchio-centro-home').style.display = 'none';
+    
+    // Nasconde il link della nota quando si entra in una sezione ricette o prolegomeni
+    if (linkNota) linkNota.style.display = 'none'; 
+
+    document.querySelectorAll('.timbro-btn').forEach(b => b.classList.remove('attivo'));
+    
+    // Gestione sicura del timbro attivo (evita errori se entri da 'introduzione' che non ha un timbro fisico)
+    const timbroAttivo = document.getElementById(`t-${sezione}`);
+    if (timbroAttivo) timbroAttivo.classList.add('attivo');
 
         function mostraContenuto() {
             box.scrollTop = 0;
@@ -706,7 +745,32 @@ function toggleStellaPreferita(id, event) {
             void box.offsetWidth;
             box.classList.add('sta-entrando');
 
-        if(sezione === 'forno') {
+       if (sezione === 'introduzione') {
+                box.innerHTML = 
+                    '<div class="back-link" onclick="vaiAllaHome()">← Torna alla Home</div>' +
+                    '<span class="numero-ricetta-tag" style="color: #5c1d1d; margin-top: 10px;">Prolegomeni</span>' +
+                    '<h2 style="border-bottom: 1px solid rgba(92, 29, 29, 0.2); color: #5c1d1d;">Trattato di Panificazione Meccanica</h2>' +
+                    '<p style="text-align: center; text-indent: 0; font-size: 1.1rem; color: #7a5c3a; margin-bottom: 20px;">' +
+                    '    Ad uso e diletto del forno di Mauro e Francesca' +
+                    '</p>' +
+                    '<p style="font-style: italic; text-align: center; text-indent: 0; color: #5c1d1d; margin: 25px 0; padding: 0 10px; line-height: 1.5;">' +
+                    '    "La tradition non è culto della cenere,<br>ma custodia del fuoco."' +
+                    '</p>' +
+                    '<p>' +
+                    '    Questo taccuino digitale non custodisce semplici ricette, ma formule di bilanciamento scritte per unire la memoria dei sensi alla precisione della macchina. Ogni dosaggio, ogni riposo e ogni calore sono stati calibrati e riscritti per dialogare in perfetta armonia con la meccanica della nostra impastatrice automatica.' +
+                    '</p>' +
+                    '<p style="margin-bottom: 35px;">' +
+                    '    Leggere attentamente le proporzioni prima di avviare il cammino.' +
+                    '</p>' +
+                    '<div style="background: rgba(92, 29, 29, 0.05); border: 1px dashed rgba(92, 29, 29, 0.2); padding: 12px; border-radius: 4px; margin-top: 20px;">' +
+                    '    <h3 style="font-size: 0.95rem; margin-top: 0; color: #5c1d1d; border-bottom: 1px solid rgba(92, 29, 29, 0.15); padding-bottom: 4px; text-transform: uppercase;">' +
+                    '        Nota di Compatibilità Tecnica' +
+                    '    </h3>' +
+                    '    <p style="font-size: 1.05rem; line-height: 1.4; text-indent: 0; text-align: left; margin-bottom: 0; color: #5d3f2a;">' +
+                    '        Applicazione indipendente sviluppata ad esclusivo uso amatoriale. Le procedure, i tempi e le calibrazioni presenti in questo diario sono ottimizzati per armonizzarsi con i cicli termici e i programmi della macchina <strong>Girmi MP20</strong>. Questo ricettario non è un software ufficiale Girmi né è in alcun modo affiliato o approvato dalla casa produttrice.' +
+                    '    </p>' +
+                    '</div>';
+            } else if (sezione === 'forno') {
             box.innerHTML = `
                 <h2>Il Forno</h2>
                 <p>Questo taccuino non è un semplice compendio di pesi e misure, bensì il custode silenzioso di un'arte antica, un legame invisibile che stringe la nostra cucina al calore delle tradizioni più vere. Panificare, per noi, non significa semplicemente accostare ingredienti docili al comando di una macchina; significa stringere un patto di pazienza con il tempo, assecondare il respiro profondo del grano e accogliere il mistero della vita che si risveglia tra le mura domestiche.</p>
