@@ -35,7 +35,7 @@ numero: 1,
 {
 numero: 11,
         id: "pane_cafone_napoletano",
-        immagine: "foto_pane_cafone.jpg", 
+        immagine: "pane_cafone.jpg", 
         titolo: "Pane Cafone Napoletano",
         categoria: "comuni", // Controlla se la tua categoria si chiama "pani_classici" o "comuni" come il Pane di Campagna!
         programma: "2. FRANCESE",
@@ -51,7 +51,7 @@ numero: 11,
 {
 numero: 12,
         id: "pane_toscano_sciocco",
-        immagine: "foto_pane_toscano.jpg", 
+        immagine: "pane_sciocco_toscano.jpg", 
         titolo: "Pane Toscano Sciocco (Senza Sale)",
         categoria: "comuni", // Apparirà gloriosamente sotto la voce PANI COMUNI
         programma: "1. BASE",
