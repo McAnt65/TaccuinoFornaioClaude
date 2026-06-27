@@ -59,6 +59,7 @@ numero: 14,
         // Sostituzioni chirurgiche lette dal nuovo codice
         etichettaLiquido: "Latticello (latte intero + un cucchiaio di limone fatto riposare 10 min)",
         etichettaLievito: "Bicarbonato di Sodio",
+        nascondiSceltaLievito: true,
         note: "" // Lasciato vuoto per eliminare definitivamente ogni sdoppiamento grafico!
     }
 );
