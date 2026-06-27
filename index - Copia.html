@@ -1157,7 +1157,6 @@ function toggleStellaPreferita(id, event) {
             coeffLievito = 3.0; 
             nomeLievito = "Lievito di Birra Fresco"; 
         } else if(lievitoAttuale === 'madre') { 
-            coeffLievito = 3.5; 
             nomeLievito = "Lievito Madre Secco disidratato"; 
         }
 
@@ -1168,7 +1167,23 @@ function toggleStellaPreferita(id, event) {
             const farinaFin = ricetta.dosiBase.farina ? (ricetta.dosiBase.farina * coeffPeso).toFixed(0) : 0;
             const saleFin = ricetta.dosiBase.sale ? (ricetta.dosiBase.sale * coeffPeso).toFixed(1) : 0;
             const zuccheroFin = ricetta.dosiBase.zucchero ? (ricetta.dosiBase.zucchero * coeffPeso).toFixed(1) : 0;
-            const lievitoFin = ricetta.dosiBase.lievito ? (ricetta.dosiBase.lievito * coeffPeso * coeffLievito).toFixed(1) : 0;
+           let lievitoFin = 0;
+
+if (ricetta.dosiBase.lievito) {
+
+    if (lievitoAttuale === 'madre') {
+
+        const farinaTotale = ricetta.dosiBase.farina * coeffPeso;
+
+        // Molino Rossetto: 35 g ogni 500 g di farina
+        lievitoFin = (farinaTotale * 35 / 500).toFixed(1);
+
+    } else {
+
+        lievitoFin = (ricetta.dosiBase.lievito * coeffPeso * coeffLievito).toFixed(1);
+
+    }
+}
             const latteFin = ricetta.dosiBase.latte ? (ricetta.dosiBase.latte * coeffPeso).toFixed(0) : 0;
             const burroFin = ricetta.dosiBase.burro ? (ricetta.dosiBase.burro * coeffPeso).toFixed(0) : 0;
         
@@ -1242,12 +1257,38 @@ function toggleStellaPreferita(id, event) {
             }
 
             // 5. LIEVITO O STARTER
-            if (ricetta.dosiBase.lievito && ricetta.dosiBase.lievito > 0) {
-                // Se c'è un'etichetta speciale (es. yogurt o bicarbonato), non applichiamo il coefficiente moltiplicatore del lievito fresco/madre
-                let coeffMoltiplicatore = ricetta.etichettaLievito ? 1.0 : coeffLievito;
-                const lievitoFin = (ricetta.dosiBase.lievito * coeffPeso * coeffMoltiplicatore).toFixed(1);
-                htmlIngredienti += `<li><strong>Nel Cratere Centrale:</strong> ${lievitoFin} ${unitaLievito} di ${testoLievitoDinamico} <em>(lontano dal sale!)</em></li>`;
+if (ricetta.dosiBase.lievito && ricetta.dosiBase.lievito > 0) {
+
+    let lievitoFin;
+
+    if (lievitoAttuale === 'madre') {
+
+        // Calcolo basato sulla quantità reale di farina
+        let farinaTotale = 0;
+
+        if (ricetta.dosiBase.farine) {
+            for (let tipo in ricetta.dosiBase.farine) {
+                farinaTotale += ricetta.dosiBase.farine[tipo];
             }
+        } else if (ricetta.dosiBase.farina) {
+            farinaTotale = ricetta.dosiBase.farina;
+        }
+
+        farinaTotale = farinaTotale * coeffPeso;
+
+        // Molino Rossetto:
+        // 35 g ogni 500 g di farina
+        lievitoFin = (farinaTotale * 35 / 500).toFixed(1);
+
+    } else {
+
+        let coeffMoltiplicatore = ricetta.etichettaLievito ? 1.0 : coeffLievito;
+        lievitoFin = (ricetta.dosiBase.lievito * coeffPeso * coeffMoltiplicatore).toFixed(1);
+
+    }
+
+    htmlIngredienti += `<li><strong>Nel Cratere Centrale:</strong> ${lievitoFin} ${unitaLievito} di ${testoLievitoDinamico} <em>(lontano dal sale!)</em></li>`;
+}
 
             // 6. INGREDIENTI EXTRA AL BIP o INIZIALI
             if (ricetta.ingredientiExtra) {
