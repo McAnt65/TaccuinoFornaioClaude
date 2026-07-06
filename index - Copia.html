@@ -578,6 +578,7 @@ function chiudiFotoSovrapposizione() {
     <script>
 let pesoAttuale = 750;
 let lievitoAttuale = 'secco';
+let parametroMadre = localStorage.getItem('parametroMadre') || 35;
 
 // ---------------------------------------------------------------
 // CONTROLLO QUALITA' DEL DATABASE RICETTE (solo log in console)
@@ -1067,14 +1068,18 @@ function toggleStellaPreferita(id, event) {
                         <button class="selector-btn ${pesoAttuale===1000?'active':''}" onclick="cambiaParametroRicetta(this, '${idRicetta}', 'peso', 1000)">1000g</button>
                     </div>
                 </div>
-                <div class="interact-bar">
-                    <span class="interact-label">Lievito:</span>
-                    <div class="btn-group">
-                        <button class="selector-btn ${lievitoAttuale==='secco'?'active':''}" onclick="cambiaParametroRicetta(this, '${idRicetta}', 'lievito', 'secco')">Secco</button>
-                        <button class="selector-btn ${lievitoAttuale==='fresco'?'active':''}" onclick="cambiaParametroRicetta(this, '${idRicetta}', 'lievito', 'fresco')">Fresco</button>
-                        <button class="selector-btn ${lievitoAttuale==='madre'?'active':''}" onclick="cambiaParametroRicetta(this, '${idRicetta}', 'lievito', 'madre')">Madre</button>
-                    </div>
-                </div>
+               ${ricetta.nascondiSceltaLievito ? '' : `
+<div class="interact-bar">
+    <span class="interact-label">Lievito:</span>
+    <div class="btn-group">
+        <button class="selector-btn ${lievitoAttuale==='secco'?'active':''}" onclick="cambiaParametroRicetta(this,'${idRicetta}','lievito','secco')">Secco</button>
+
+        <button class="selector-btn ${lievitoAttuale==='fresco'?'active':''}" onclick="cambiaParametroRicetta(this,'${idRicetta}','lievito','fresco')">Fresco</button>
+
+        <button class="selector-btn ${lievitoAttuale==='madre'?'active':''}" onclick="cambiaParametroRicetta(this,'${idRicetta}','lievito','madre')">Madre</button>
+    </div>
+</div>
+`}
             `;
         }
     
