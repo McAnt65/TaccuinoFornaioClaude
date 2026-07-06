@@ -464,6 +464,12 @@
         #app-container.home-emersa {
             animation: homeEmerge 20s ease-out forwards;
         }
+
+        /* RIMUOVI ALONE AZZURRO AL TOCCO SU DISPOSITIVI MOBILE */
+        button, a, img, .selector-btn, [onclick] {
+            -webkit-tap-highlight-color: transparent !important;
+            outline: none !important;
+        }
     </style>
 </head>
 <body>
