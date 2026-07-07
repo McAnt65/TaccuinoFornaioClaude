@@ -111,7 +111,7 @@ numero: 10,
 {
     numero: 20,
     id: "yogurt_bianco_cremoso",
-    immagine: "foto_yogurt_casa.jpg", 
+    immagine: "yogurt_bianco_cremoso.jpg", 
     titolo: "Yogurt Bianco Cremoso Fatto in Casa",
     categoria: "colazioni", 
     programma: "15. Yogurt", 

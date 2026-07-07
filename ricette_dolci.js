@@ -20,7 +20,7 @@ databaseRicette.push(
 {
 numero: 18,
         id: "pan_de_keleba_dolce",
-        immagine: "foto_pan_keleba.jpg", 
+        immagine: "pan_keleba.jpg", 
         titolo: "Pan de Keleba Dolce all'Uvetta",
         categoria: "dolci", 
         programma: "5. Brioche", 

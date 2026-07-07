@@ -32,7 +32,7 @@ numero: 4,
 {
 numero: 13,
         id: "baguette_parigina",
-        immagine: "foto_baguette.jpg", 
+        immagine: "baguette_parigina.jpg", 
         titolo: "Baguette Parigina Home-made",
         categoria: "europei", // Inserita trionfalmente sotto la voce PANI EUROPEI
         programma: "2. FRANCESE",
@@ -47,7 +47,7 @@ numero: 13,
 {
 numero: 14,
         id: "soda_bread_irlandese",
-        immagine: "foto_soda_bread.jpg", 
+        immagine: "soda_bread.jpg", 
         titolo: "Soda Bread Irlandese (Pane al Bicarbonato)",
         categoria: "europei", 
         programma: "18. Torta", 

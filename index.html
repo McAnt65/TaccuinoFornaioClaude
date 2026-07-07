@@ -394,6 +394,60 @@
             padding-left: 0;
         }
 
+        /* Finestrella parametro lievito madre */
+        #box-parametro-madre {
+            overflow: hidden;
+            transition: max-height 0.4s ease, opacity 0.4s ease, margin 0.3s ease;
+            max-height: 0;
+            opacity: 0;
+            margin-top: 0 !important;
+        }
+        #box-parametro-madre.aperto {
+            max-height: 120px;
+            opacity: 1;
+            margin-top: 10px !important;
+        }
+        .madre-box-inner {
+            padding: 10px 12px 8px 12px;
+            background: rgba(139, 90, 43, 0.07);
+            border: 1px solid rgba(128, 0, 32, 0.25);
+            border-radius: 4px;
+        }
+        .madre-etichetta {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 0.92rem;
+            color: #5a2c11;
+            display: block;
+            margin-bottom: 6px;
+        }
+        .madre-input-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .madre-input-numero {
+            width: 64px;
+            font-family: 'Cinzel', serif;
+            font-weight: bold;
+            font-size: 1.3rem;
+            color: #800020;
+            background: transparent;
+            border: none;
+            border-bottom: 2px dashed #800020;
+            text-align: center;
+            outline: none;
+            padding: 2px 4px;
+            -moz-appearance: textfield;
+        }
+        .madre-input-numero::-webkit-outer-spin-button,
+        .madre-input-numero::-webkit-inner-spin-button { -webkit-appearance: none; }
+        .madre-input-um {
+            font-family: 'Cinzel', serif;
+            font-size: 0.85rem;
+            color: #5a2c11;
+        }
+
         .ancora-storia { 
             display: block; 
             text-align: center; 
@@ -1095,17 +1149,19 @@ function toggleStellaPreferita(id, event) {
     </div>
 </div>
 
-<div id="box-parametro-madre" style="display: ${lievitoAttuale === 'madre' ? 'block' : 'none'}; margin-top: 12px; padding: 5px 10px; text-align: left;">
-    <p style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1rem; color: #5a2c11; margin: 0; line-height: 1.5;">
-        Inserisci dose consigliata per 500 gr. di farina dal produttore = 
-        <span contenteditable="true" 
-              inputmode="numeric"
-              pattern="[0-9]*"
-              onblur="aggiornaParametroMadre(this.innerText)"
-              oninput="if(this.innerText.length > 3) this.innerText = this.innerText.slice(0,3)"
-              style="font-family: 'Cinzel', serif; font-weight: bold; font-size: 1.35rem; color: #800020; border-bottom: 1px dashed #800020; padding: 0 4px; cursor: pointer; outline: none; display: inline-block; font-style: normal;">${parametroMadre}</span> 
-        <span style="font-family: 'Cinzel', serif; font-weight: bold; font-size: 0.9rem; font-style: normal;">gr.</span>
-    </p>
+<div id="box-parametro-madre" class="${lievitoAttuale === 'madre' ? 'aperto' : ''}">
+    <div class="madre-box-inner">
+        <span class="madre-etichetta">Dose del tuo produttore per 500 gr. di farina:</span>
+        <div class="madre-input-row">
+            <input class="madre-input-numero"
+                   type="number" min="1" max="200" step="1"
+                   inputmode="numeric"
+                   value="${parametroMadre}"
+                   onchange="aggiornaParametroMadre(this.value)"
+                   oninput="aggiornaParametroMadre(this.value)">
+            <span class="madre-input-um">gr. di Lievito Madre Secco</span>
+        </div>
+    </div>
 </div
 
 `}
@@ -1169,7 +1225,12 @@ function toggleStellaPreferita(id, event) {
             // --- AGGIUNTA: Mostra o nascondi la finestrella del lievito madre ---
             const boxMadre = document.getElementById('box-parametro-madre');
             if (boxMadre) {
-                boxMadre.style.display = (valore === 'madre') ? 'block' : 'none';
+                // Apertura animata via classe CSS (transition max-height)
+                if (valore === 'madre') {
+                    boxMadre.classList.add('aperto');
+                } else {
+                    boxMadre.classList.remove('aperto');
+                }
             }
             // ------------------------------------------------------------------
         }
@@ -1182,15 +1243,15 @@ function toggleStellaPreferita(id, event) {
         aggiornaDosiSchermo(ricetta);
     }
     function aggiornaParametroMadre(valore) {
-
-    parametroMadre = parseFloat(valore) || 35;
-
-    localStorage.setItem('parametroMadre', parametroMadre);
-
-    if (ricettaAttuale) {
-        aggiornaDosiSchermo(ricettaAttuale);
+        const parsed = parseFloat(String(valore).replace(',', '.'));
+        if (!isNaN(parsed) && parsed > 0) {
+            parametroMadre = parsed;
+            localStorage.setItem('parametroMadre', parametroMadre);
+            if (ricettaAttuale) {
+                aggiornaDosiSchermo(ricettaAttuale);
+            }
+        }
     }
-}
 
     function arrotondaCucchiaino(valore) {
         let arrotondato = Math.round(valore * 2) / 2;

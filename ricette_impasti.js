@@ -51,7 +51,7 @@ numero: 7,
 {
 numero: 19,
         id: "impasto_focaccia_pugliese",
-        immagine: "foto_focaccia_pugliese.jpg", 
+        immagine: "focaccia_pugliese.jpg", 
         titolo: "Impasto Focaccia Pugliese Tradizionale",
         categoria: "impasti", // Inserito nella sezione degli Impasti solo lavorati dalla macchina
         programma: "10. Impasto Pizza", // Sfrutta la forza e la temperatura di questo ciclo specifico

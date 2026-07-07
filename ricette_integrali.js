@@ -24,7 +24,7 @@ databaseRicette.push(
  {
         numero: 23,
         id: "pane_senza_glutine_saraceno_semi",
-        immagine: "foto_pane_senza_glutine.jpg", 
+        immagine: "pane_grano_saraceno_semi.jpg", 
         titolo: "Pane Senza Glutine al Grano Saraceno e Semi",
         categoria: "integrali", // Inserito perfettamente nella vostra categoria dei pani ricchi e rustici
         programma: "6. SENZA GLUTINE", // Ciclo specifico con impasto rapido e singola lievitazione termoregolata
@@ -57,7 +57,7 @@ databaseRicette.push(
     {
     numero: 24,
     id: "pane_integrale_miele_malto",
-    immagine: "foto_integrale_miele.jpg", 
+    immagine: "pane_integrale_miele_malto.jpg", 
     titolo: "Pane Integrale al Miele e Malto d'Orzo",
     categoria: "integrali",
     programma: "3. INTEGRALE", // Il programma della Girmi con le fasi di preriscaldamento più lunghe

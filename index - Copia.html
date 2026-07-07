@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=3.0, user-scalable=yes">
     <title>Il Taccuino del Fornaio</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&display=swap" rel="stylesheet">
     
@@ -464,6 +464,12 @@
         #app-container.home-emersa {
             animation: homeEmerge 20s ease-out forwards;
         }
+
+        /* RIMUOVI ALONE AZZURRO AL TOCCO SU DISPOSITIVI MOBILE */
+        button, a, img, .selector-btn, [onclick] {
+            -webkit-tap-highlight-color: transparent !important;
+            outline: none !important;
+        }
     </style>
 </head>
 <body>
@@ -578,7 +584,8 @@ function chiudiFotoSovrapposizione() {
     <script>
 let pesoAttuale = 750;
 let lievitoAttuale = 'secco';
-let parametroMadre = localStorage.getItem('parametroMadre') || 35;
+let parametroMadre = parseFloat(localStorage.getItem('parametroMadre')) || 35;
+let ricettaAttuale = null;
 
 // ---------------------------------------------------------------
 // CONTROLLO QUALITA' DEL DATABASE RICETTE (solo log in console)
@@ -1040,6 +1047,7 @@ function toggleStellaPreferita(id, event) {
 
     function mostraDettaglioRicetta(idRicetta) {
         const ricetta = databaseRicette.find(r => r.id === idRicetta);
+        ricettaAttuale = ricetta;
         if(!ricetta) return;
         // Resetta scroll subito, prima dell'animazione
         document.getElementById('scroll-box').scrollTop = 0;
@@ -1068,17 +1076,38 @@ function toggleStellaPreferita(id, event) {
                         <button class="selector-btn ${pesoAttuale===1000?'active':''}" onclick="cambiaParametroRicetta(this, '${idRicetta}', 'peso', 1000)">1000g</button>
                     </div>
                 </div>
-               ${ricetta.nascondiSceltaLievito ? '' : `
+              ${ricetta.nascondiSceltaLievito ? '' : `
 <div class="interact-bar">
     <span class="interact-label">Lievito:</span>
+
     <div class="btn-group">
-        <button class="selector-btn ${lievitoAttuale==='secco'?'active':''}" onclick="cambiaParametroRicetta(this,'${idRicetta}','lievito','secco')">Secco</button>
+        <button class="selector-btn ${lievitoAttuale==='secco'?'active':''}" onclick="cambiaParametroRicetta(this,'${idRicetta}','lievito','secco')">
+            Secco
+        </button>
 
-        <button class="selector-btn ${lievitoAttuale==='fresco'?'active':''}" onclick="cambiaParametroRicetta(this,'${idRicetta}','lievito','fresco')">Fresco</button>
+        <button class="selector-btn ${lievitoAttuale==='fresco'?'active':''}" onclick="cambiaParametroRicetta(this,'${idRicetta}','lievito','fresco')">
+            Fresco
+        </button>
 
-        <button class="selector-btn ${lievitoAttuale==='madre'?'active':''}" onclick="cambiaParametroRicetta(this,'${idRicetta}','lievito','madre')">Madre</button>
+        <button class="selector-btn ${lievitoAttuale==='madre'?'active':''}" onclick="cambiaParametroRicetta(this,'${idRicetta}','lievito','madre')">
+            Madre
+        </button>
     </div>
 </div>
+
+<div id="box-parametro-madre" style="display: ${lievitoAttuale === 'madre' ? 'block' : 'none'}; margin-top: 12px; padding: 5px 10px; text-align: left;">
+    <p style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1rem; color: #5a2c11; margin: 0; line-height: 1.5;">
+        Inserisci dose consigliata per 500 gr. di farina dal produttore = 
+        <span contenteditable="true" 
+              inputmode="numeric"
+              pattern="[0-9]*"
+              onblur="aggiornaParametroMadre(this.innerText)"
+              oninput="if(this.innerText.length > 3) this.innerText = this.innerText.slice(0,3)"
+              style="font-family: 'Cinzel', serif; font-weight: bold; font-size: 1.35rem; color: #800020; border-bottom: 1px dashed #800020; padding: 0 4px; cursor: pointer; outline: none; display: inline-block; font-style: normal;">${parametroMadre}</span> 
+        <span style="font-family: 'Cinzel', serif; font-weight: bold; font-size: 0.9rem; font-style: normal;">gr.</span>
+    </p>
+</div
+
 `}
             `;
         }
@@ -1134,7 +1163,16 @@ function toggleStellaPreferita(id, event) {
 
     function cambiaParametroRicetta(btnEl, idRicetta, tipo, valore) {
         if(tipo === 'peso') pesoAttuale = valore;
-        if(tipo === 'lievito') lievitoAttuale = valore;
+        if(tipo === 'lievito') {
+            lievitoAttuale = valore;
+            
+            // --- AGGIUNTA: Mostra o nascondi la finestrella del lievito madre ---
+            const boxMadre = document.getElementById('box-parametro-madre');
+            if (boxMadre) {
+                boxMadre.style.display = (valore === 'madre') ? 'block' : 'none';
+            }
+            // ------------------------------------------------------------------
+        }
             
         const siblings = btnEl.parentElement.querySelectorAll('.selector-btn');
         siblings.forEach(s => s.classList.remove('active'));
@@ -1143,6 +1181,16 @@ function toggleStellaPreferita(id, event) {
         const ricetta = databaseRicette.find(r => r.id === idRicetta);
         aggiornaDosiSchermo(ricetta);
     }
+    function aggiornaParametroMadre(valore) {
+
+    parametroMadre = parseFloat(valore) || 35;
+
+    localStorage.setItem('parametroMadre', parametroMadre);
+
+    if (ricettaAttuale) {
+        aggiornaDosiSchermo(ricettaAttuale);
+    }
+}
 
     function arrotondaCucchiaino(valore) {
         let arrotondato = Math.round(valore * 2) / 2;
@@ -1181,7 +1229,7 @@ if (ricetta.dosiBase.lievito) {
         const farinaTotale = ricetta.dosiBase.farina * coeffPeso;
 
         // Molino Rossetto: 35 g ogni 500 g di farina
-        lievitoFin = (farinaTotale * 35 / 500).toFixed(1);
+        lievitoFin = (farinaTotale * parametroMadre / 500).toFixed(1);
 
     } else {
 
@@ -1283,7 +1331,7 @@ if (ricetta.dosiBase.lievito && ricetta.dosiBase.lievito > 0) {
 
         // Molino Rossetto:
         // 35 g ogni 500 g di farina
-        lievitoFin = (farinaTotale * 35 / 500).toFixed(1);
+        lievitoFin = (farinaTotale * parametroMadre / 500).toFixed(1);
 
     } else {
 

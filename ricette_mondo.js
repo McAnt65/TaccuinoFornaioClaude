@@ -20,7 +20,7 @@ databaseRicette.push(
 {
 numero: 15,
         id: "pane_shokupan_giapponese",
-        immagine: "foto_shokupan.jpg", 
+        immagine: "shokupan.jpg", 
         titolo: "Pane Shokupan Giapponese al Latte",
         categoria: "mondo", // Trionfale debutto nella sezione PANI DAL MONDO!
         programma: "6. Sandwich", // Perfetto per ottenere la tipica mollica fittissima ed elastica
